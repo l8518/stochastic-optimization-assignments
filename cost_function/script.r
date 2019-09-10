@@ -1,3 +1,5 @@
+
+# Calculate Pi
 pi_function <- function(d, x) {
   if (d > x) {
     return(d-x);
@@ -6,6 +8,8 @@ pi_function <- function(d, x) {
   }
   
 }
+
+# V(t)
 v_function <- function(X_set, t, m, T_max) {
   d = 5
   K = 20
@@ -37,12 +41,13 @@ v_function <- function(X_set, t, m, T_max) {
   return(m)
 }
 
-X_set = c(seq(0, 25))
+X_set = c(seq(0, 50))
 T_max=1000
 time_range = T_max + 1
 x_range = max(X_set)
 m <- matrix(, ncol=time_range, nrow=x_range+1, , dimnames = list(X_set,  c(seq(0, T_max))))
 for (t in T_max:0) {
+  # Calculate V with different Ordersizes (X) for each T
   m = v_function(X_set, t, m, T_max)  
 }
 
