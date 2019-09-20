@@ -20,7 +20,7 @@
 	},
 
 	// Specifies a command to run after the container is created
-	"postCreateCommand": "sudo pip install -r requirements.txt",
+	// "postCreateCommand": "sudo pip install -r requirements.txt",
 
 	"extensions": [
 		"ms-python.python"
