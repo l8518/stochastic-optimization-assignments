@@ -12,7 +12,7 @@ class RevenueManagementDPSolver:
     beta = (0.01, 0.005, 0.0025)
 
     def f_lambda(self, t, i):
-        return self.alpha[i] * np.exp(self.beta[i] * t)
+        return self.alpha[i - 1] * np.exp(self.beta[i - 1] * t)
 
     def f_V(self, t, x):
         if (not pd.isna(self.df[t][x])):
@@ -22,13 +22,13 @@ class RevenueManagementDPSolver:
         if (x == 0):
             return 0
         n = len(self.y)
-        max_value = [0]
-        for j in range(n):
+        max_value = []
+        for j in range(1, n + 1):
             # summing loop 1
             sum_1 = 0
-            for i in range(j + 1):
-                lambda_value = self.f_lambda(t, 1)
-                subterm_1 = self.y[j] * self.f_V(t + 1, x - 1)
+            for i in range(1, j + 1):
+                lambda_value = self.f_lambda(t, i)
+                subterm_1 = self.y[j - 1] * self.f_V(t + 1, x - 1)
                 sum_1 += lambda_value * subterm_1
             subsum_2 = 0
             for i in range(j + 1):
@@ -39,7 +39,7 @@ class RevenueManagementDPSolver:
         return max(max_value)
 
     def solve(self):
-        self.df = pd.DataFrame(None, index=range(self.C + 1), columns=range(self.T + 1))
+        self.df = pd.DataFrame(None, index=range(1, self.C + 1), columns=range(1, self.T + 1))
         print(self.df)
         for t in reversed(range(self.T + 1)):
             for small_c in range(self.C + 1):
